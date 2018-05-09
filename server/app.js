@@ -4,27 +4,31 @@ const dotenv = require('dotenv').config()
 const session = require('express-session');
 const grant = require('grant-express');
 const nextConfig = require('../next.config')
-const models = require('./models')
+//const models = require('./models')
 const dev = process.env.NODE_ENV !== 'production'
-
+const fs=require("fs")
 const app = next({
     dev,
     dir:'./client',
     conf:nextConfig
 })
 const handle = app.getRequestHandler()
-const port = process.env.PORT||3000
 
 
+module.exports=()=>{
+   return app.prepare().then(() => {
+      const server = express()
+      server.use(session({secret: 'grant'}))
+      .use(grant(require("./grant.config")))
+      .get("/:provider/callback",(req,res)=>{
+        console.log(req.query)
+        fs.writeFile("./out.txt",JSON.stringify(req.query,null,4))
+        res.end()
+      })
 
-app.prepare().then(() => {
-  const server = express()
-  server.use(session({secret: 'grant'}))
-  .use(grant(require("./grant.config")))
-  
-
-  server.get('*', (req, res) => {
-    handle(req, res)
-  })
-  server.listen(port,()=>console.log("Server listening on port " +port))
-})
+      server.get('*', (req, res) => {
+        handle(req, res)
+      })
+      return server
+    })
+}

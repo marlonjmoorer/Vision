@@ -1,13 +1,13 @@
 module.exports = {
     server: {
         protocol: "http",
-        host: process.env.hostname||"127.0.0.1:3000",
+        host: process.env.hostname||"localhost:3000",
         state: true
     },
     "facebook": {
         "key": process.env.facebookKey,
         "secret": process.env.facebookSecret,
-        "callback": "/facebook/callback",
+        "callback": "/callback/",
         "scope": [
           "public_profile",
           "email"

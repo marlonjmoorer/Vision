@@ -3,3 +3,12 @@ node_modules/
 .next/
 build/
 .vscode/
+*.pem
+*.key
+*.crt
+*.crs
+rootCA.srl
+server.csr
+server.csr.cnf
+v3.ext
+out.txt
