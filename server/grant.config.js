@@ -28,7 +28,7 @@ module.exports = {
    "twitter": {
     "key": process.env.twitterKey,
     "secret": process.env.twitterSecret,
-    "callback": "/twitter/callback"
+    "callback": "/callback"
    }
 
 }

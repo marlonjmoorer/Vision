@@ -5,6 +5,8 @@ const session = require('express-session');
 const grant = require('grant-express');
 const nextConfig = require('../next.config')
 //const models = require('./models')
+
+
 const dev = process.env.NODE_ENV !== 'production'
 const fs=require("fs")
 const app = next({
@@ -19,12 +21,13 @@ module.exports=()=>{
    return app.prepare().then(() => {
       const server = express()
       server.use(session({secret: 'grant'}))
-      .use(grant(require("./grant.config")))
-      .get("/:provider/callback",(req,res)=>{
-        console.log(req.query)
-        fs.writeFile("./out.txt",JSON.stringify(req.query,null,4))
-        res.end()
-      })
+      require('./auth')(server)
+      // .use(grant(require("./grant.config")))
+      // .get("/:provider/callback",(req,res)=>{
+      //   console.log(req.query)
+      //   fs.writeFile("./out.txt",JSON.stringify(req.query,null,4))
+      //   res.end()
+      // })
 
       server.get('*', (req, res) => {
         handle(req, res)
