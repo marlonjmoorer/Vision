@@ -10,7 +10,6 @@ fs.readdirSync(dir)
 .forEach(filename=>{
     const model=require(`./${filename}`)(sequelize)
     const name= filename.split(".model")[0]
-    model.sync()
     models[name]=model
 })
 module.exports=models

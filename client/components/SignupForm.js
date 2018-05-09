@@ -32,7 +32,7 @@ export default class SignupForm extends Component {
             </Button>
             </Grid>
             <Grid item xs >
-            <Button  href="/auth/google" variant="raised" color="primary">
+            <Button  href="/auth/twitter" variant="raised" color="primary">
                 Login With Twitter
             </Button>
             </Grid>
