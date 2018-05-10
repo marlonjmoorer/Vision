@@ -1,25 +1,21 @@
 import React from 'react'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
 import SignupForm from './SignupForm';
-import { withConsumer } from '../context/AuthContext';
-
-export default  withConsumer((props) => {
+import {withConsumer} from '../context/AuthContext';
+import {Layout, Menu, Breadcrumb} from 'antd';
+const {Header, Content, Footer} = Layout;
+export default withConsumer((props) => {
   console.log(props)
   return (
-    <div className="bar">
-     <AppBar position="static" color="default">
-        <Toolbar>
-          <Typography className="title" variant="title" color="inherit">
-            Title
-          </Typography>
-          <Button color="inherit">Signup</Button>
-          <Button color="inherit">Login</Button>
-          <SignupForm open={true}/>
-        </Toolbar>
-      </AppBar>
-    </div>
+      <Header style={{ position: 'fixed', width: '100%' }}>
+        <div className="logo"/>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          style={{lineHeight: '64px'}}>
+          <Menu.Item key="1">nav 1</Menu.Item>
+          <Menu.Item key="2">nav 2</Menu.Item>
+          <Menu.Item key="3">nav 3</Menu.Item>
+        </Menu>
+      </Header>
   )
 })

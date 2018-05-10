@@ -1,6 +1,8 @@
 
 const withSass = require('@zeit/next-sass')
-module.exports = withSass({
+const withLess = require('@zeit/next-less')
+const withCSS = require('@zeit/next-css')
+module.exports = withCSS({
     distDir: 'build',
     dir:'./client',
     dev:true
