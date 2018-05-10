@@ -1,0 +1,13 @@
+
+html
+  head
+    title Authenticated
+  
+    body Authenticated successfully.
+
+    script.
+        window.parent.postMessage({
+            test:"test"
+        }, "*");
+        window.opener.authenticateCallback('{token}');
+        window.close();

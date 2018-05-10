@@ -3,8 +3,9 @@ const next = require('next')
 const dotenv = require('dotenv').config()
 const session = require('express-session');
 const grant = require('grant-express');
+const path = require('path');
 const nextConfig = require('../next.config')
-//const models = require('./models')
+
 
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -17,21 +18,32 @@ const app = next({
 const handle = app.getRequestHandler()
 
 
-module.exports=()=>{
-   return app.prepare().then(() => {
-      const server = express()
-      server.use(session({secret: 'grant'}))
-      require('./auth')(server)
-      // .use(grant(require("./grant.config")))
-      // .get("/:provider/callback",(req,res)=>{
-      //   console.log(req.query)
-      //   fs.writeFile("./out.txt",JSON.stringify(req.query,null,4))
-      //   res.end()
-      // })
 
-      server.get('*', (req, res) => {
-        handle(req, res)
-      })
-      return server
-    })
-}
+const server = express()
+server.set('view engine', 'pug')
+server.set('views', path.join(__dirname, 'views'));
+server.use(session({secret: 'grant'}))
+require('./auth')(server)
+// server.get('*', (req, res) =>{
+//   handle(req, res)
+// })
+module.exports= server
+
+// module.exports=()=>{
+//    return app.prepare().then(() => {
+//       const server = express()
+//       server.use(session({secret: 'grant'}))
+//       require('./auth')(server)
+//       // .use(grant(require("./grant.config")))
+//       // .get("/:provider/callback",(req,res)=>{
+//       //   console.log(req.query)
+//       //   fs.writeFile("./out.txt",JSON.stringify(req.query,null,4))
+//       //   res.end()
+//       // })
+
+//       server.get('*', (req, res) => {
+//         handle(req, res)
+//       })
+//       return server
+//     })
+// }

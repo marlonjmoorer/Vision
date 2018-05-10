@@ -4,8 +4,10 @@ import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import SignupForm from './SignupForm';
+import { withConsumer } from '../context/AuthContext';
 
-export default () => {
+export default  withConsumer((props) => {
+  console.log(props)
   return (
     <div className="bar">
      <AppBar position="static" color="default">
@@ -20,4 +22,4 @@ export default () => {
       </AppBar>
     </div>
   )
-}
+})

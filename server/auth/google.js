@@ -1,7 +1,6 @@
-const passport = require('passport');
 const GoogleStrategy= require('passport-google-oauth').OAuth2Strategy;
 const {google} = require('./config');
-const {user} = require('../models');
+const {User} = require('../models');
 
 
 module.exports=new GoogleStrategy({
@@ -9,7 +8,7 @@ module.exports=new GoogleStrategy({
     clientSecret:google.clientSecret,
     callbackURL:google.callbackURL
 },function(token, tokenSecret, profile, done) {
-    user.createOrLogin(token,tokenSecret,profile.id,"google").then(u=>
+    User.createOrLogin(token,tokenSecret,profile.id,"google").then(u=>
         done(null,u)
     )
 })

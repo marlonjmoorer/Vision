@@ -1,6 +1,7 @@
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
-const {user} = require('../models');
+const {User} = require('../models');
+const secret=process.env.SECRET
 module.exports=(app)=>{
     app.use(passport.initialize());
     app.use(passport.session());
@@ -13,14 +14,8 @@ module.exports=(app)=>{
         app.get(`/auth/${provider}/callback`,
         passport.authenticate(provider, { failureRedirect: `/auth/${provider}/fail` }),
         function(req, res) {
-            // Successful authentication
-            if(req.user){
-                const{id,profileId}=req.user
-                const token=jwt.sign({id,profileid},"lol")
-                res.json({token});
-            }else{
-                res.json(new Error("Authenticaion Failed"))
-            }
+            const token=generateToken(req.user)
+            res.render('auth',{token})
         });
         app.get(`/auth/${provider}/fail`,(req,res)=>{
             res.json(new Error("Authenticaion Failed"))
@@ -31,9 +26,21 @@ module.exports=(app)=>{
     });
     
     passport.deserializeUser(function(id, done) {
-        user.findById(id).then( user=> {
+        User.findById(id).then( user=> {
           done(null, user);
         }).catch(done)
     });
     
+}
+
+
+const generateToken=({loginType,id,profileId})=>{
+
+    const token = jwt.sign({profileId}, secret, {
+        expiresIn: '3 days',
+        issuer: loginType,
+        subject: id.toString()
+      });
+    
+      return token;
 }

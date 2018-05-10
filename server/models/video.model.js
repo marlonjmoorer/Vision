@@ -1,8 +1,8 @@
-const Sequelize = require('sequelize')
-module.exports=(sequelize)=>{
-const Video=sequelize.define("video",{
+
+module.exports=(sequelize, DataTypes)=>{
+const Video=sequelize.define("Video",{
    title:{
-       type:Sequelize.STRING
+       type:DataTypes.STRING
    }
 })
 return Video

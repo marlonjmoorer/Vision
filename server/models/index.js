@@ -8,8 +8,7 @@ const models= {}
 fs.readdirSync(dir)
 .filter(filename=> (/.model./).test(filename))
 .forEach(filename=>{
-    const model=require(`./${filename}`)(sequelize)
-    const name= filename.split(".model")[0]
-    models[name]=model
+    sequelize.import(`./${filename}`)
 })
-module.exports=models
+sequelize.sync()
+module.exports=sequelize.models
