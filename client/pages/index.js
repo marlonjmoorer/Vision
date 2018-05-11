@@ -1,10 +1,8 @@
 import React from 'react'
-import Main from '../layouts/main'
 
-export default () => {
+export default (props) => {
+  
   return (
-    <Main>
-       Index
-    </Main>
+<p>j</p>
   )
 }

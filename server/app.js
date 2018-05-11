@@ -28,7 +28,6 @@ require('./auth')(server)
 //   handle(req, res)
 // })
 module.exports= server
-
 // module.exports=()=>{
 //    return app.prepare().then(() => {
 //       const server = express()

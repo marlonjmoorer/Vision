@@ -4,10 +4,9 @@ html
     title Authenticated
   
     body Authenticated successfully.
-
     script.
-        window.parent.postMessage({
-            test:"test"
+        window.opener.postMessage({
+           token:'#{token}'
         }, "*");
-        window.opener.authenticateCallback('{token}');
+        //window.opener.authenticateCallback('{token}');
         window.close();
