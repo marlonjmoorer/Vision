@@ -8,12 +8,13 @@ const httpsOptions = {
     cert: fs.readFileSync('./server.crt'),
 }
 
-
-const app=require('./server/app')
-app.listen(port, () => {
-    console.log('http://localhost:' + port)
+require('./server/app')().then(app=>{
+    https.createServer(httpsOptions,app).listen(port, () => {
+        console.log('====================================');
+        console.log('https://localhost:' + port)
+        console.log('====================================');
+    })
 })
-
 
 
  

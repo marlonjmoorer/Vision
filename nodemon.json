@@ -1,8 +1,6 @@
 {
-
-  "ignore": [ "*/client/*"],
-  "execMap": {
-    "rb": "ruby",
-    "pde": "processing --sketch={{pwd}} --run"
-  }
+  "verbose":true,
+  "ignore": [ "/client/*",".next/*","node_modules/*","build/*"],
+  "watch": ["server/*", "index.js"],
+  "ext": "js json"
 }

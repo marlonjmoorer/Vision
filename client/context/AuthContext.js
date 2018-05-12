@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import Cookie from 'js-cookie';
+import axios from 'axios';
 
 const AuthContext=React.createContext()
-
+const http= axios.create({
+ withCredentials:true,
+ baseURL:"/api"
+})
 
 export default class Auth extends Component {
 
   constructor(props){
-    super(props)   
+    super(props) 
+    if (props.token){
+        http.defaults.headers={
+                  "Authorization":`JWT ${props.token}`,
+                  'Content-Type': 'application/json'
+        }
+    }  
   }
   state={
     loggedIn: !!(this.props.token),
@@ -20,6 +30,13 @@ export default class Auth extends Component {
     logout:()=> {
       Cookie.remove("token")
       this.setState({loggedIn:false,token:null})
+    },
+    user:null,
+    fetchUser:()=>{
+      http.get("/users/self").then(user=>this.setState({user}))
+    },
+    updateUser:()=>{
+ 
     }
   }
 

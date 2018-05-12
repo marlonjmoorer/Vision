@@ -23,13 +23,10 @@ class SignupForm extends Component {
     }
 
     authenticate=(provider)=> {
-        window.open('http://localhost:3500/auth/' + provider);
+        window.open('http://127.0.0.1:3500/auth/' + provider);
     }
 
     render() {
-        if(this.state.url){
-            return <iframe src={this.state.url} height="400" width="400"/>
-        }
         return (
         <div style={{
             display:"flex",

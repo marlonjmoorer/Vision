@@ -7,10 +7,22 @@ module.exports=(sequelize, DataTypes)=>{
         },loginType:{
             type:DataTypes.STRING,
             allowNull:false
+        },
+        token:{
+            type:DataTypes.STRING,
+        },
+        secret:{
+            type:DataTypes.STRING,
+        },
+        about:{
+            type:DataTypes.TEXT
+        },
+        photo:{
+            type:DataTypes.BLOB
         }
     })
     User.createOrLogin = (token,secret,profileId,loginType)=>{
-        return User.findOrCreate({ where: {profileId,loginType} }).spread((user, created) =>{
+        return User.findOrCreate({ where: {profileId,loginType},defaults: {token,secret} }).spread((user, created) =>{
             console.log(created)
             return user
         })

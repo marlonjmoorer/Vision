@@ -1,14 +1,12 @@
 const Sequelize = require('sequelize')
 const fs = require('fs')
 const path = require('path')
-const sequelize = new Sequelize(process.env.CONNECTIONSTRING)
-const dir ="./server/models"
-const models= {}
+const sequelize = new Sequelize(process.env.CONNECTIONSTRING,{logging:false})
 
-fs.readdirSync(dir)
-.filter(filename=> (/.model./).test(filename))
+fs.readdirSync(__dirname)
+.filter(filename=> filename!=path.basename( __filename))
 .forEach(filename=>{
     sequelize.import(`./${filename}`)
 })
-sequelize.sync()
+//sequelize.sync({alter:true})
 module.exports=sequelize.models
