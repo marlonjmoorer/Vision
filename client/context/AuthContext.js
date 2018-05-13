@@ -1,48 +1,54 @@
 import React, { Component } from 'react';
 import Cookie from 'js-cookie';
-import axios from 'axios';
+import api,{setAuth} from '../api';
+import Router from 'next/router'
 
 const AuthContext=React.createContext()
-const http= axios.create({
- withCredentials:true,
- baseURL:"/api"
-})
+
 
 export default class Auth extends Component {
 
   constructor(props){
     super(props) 
-    if (props.token){
-        http.defaults.headers={
-                  "Authorization":`JWT ${props.token}`,
-                  'Content-Type': 'application/json'
-        }
-    }  
+    api.interceptors.request.use((config)=> {
+      if(this.state.token)
+      {config.headers.authorization=`JWT ${this.state.token}`}
+      return config;
+    });
   }
+
   state={
     loggedIn: !!(this.props.token),
-    setToken:(token)=>{
+    setToken:async(token)=>{
         console.log('Log')
         Cookie.set('token',token);
-        this.setState({loggedIn:true,token})
+        this.setState({loggedIn:true,token})  
     },
     token:this.props.token,
     logout:()=> {
       Cookie.remove("token")
       this.setState({loggedIn:false,token:null})
+      window.location.href = window.location.href
     },
     user:null,
-    fetchUser:()=>{
-      http.get("/users/self").then(user=>this.setState({user}))
+    profile:null,
+    fetchUser:async()=>{
+      console.log("fetching user")
+      await api.get("/users/self").then(({data})=>this.setState({user:data}))
+      console.log(this.state.user)
     },
     updateUser:()=>{
  
     }
   }
+  componentDidMount() {
+    if(this.state.loggedIn && !this.state.user){
+      this.state.fetchUser()
+    }
+  }
 
   
   render() {
-    console.log(this.props)
     return (
       <AuthContext.Provider value={this.state}>
       {this.props.children}
@@ -55,3 +61,24 @@ export const withConsumer=(Component)=>props=>
 <AuthContext.Consumer>
 {(context)=><Component {...props} {...context} />}
 </AuthContext.Consumer>
+
+export const authGuard= (Page)=> class extends Component{
+  constructor(props) {
+    super(props)
+    
+  }
+  static async getInitialProps ({ query }) {
+    return {...query}
+  }
+  render(){
+   return <AuthContext.Consumer>
+      {(context)=>{
+        if (process.browser&&!context.loggedIn) {
+          Router.push("/")
+        }
+      return <Page {...this.props} {...context}/>
+     }}
+    </AuthContext.Consumer>
+  }
+}
+

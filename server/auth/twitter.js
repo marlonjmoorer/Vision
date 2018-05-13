@@ -8,9 +8,18 @@ module.exports = {
         consumerKey: twitter.consumerKey,
         consumerSecret: twitter.consumerSecret,
         callbackURL: twitter.callbackURL
-    }, function (token, tokenSecret, profile, done) {
+    }, function (token, secret, profile, done) {
+        const data={
+            token,
+            secret,
+            profileId:profile.id,
+            loginType:"twitter",
+            displayName:profile.displayName,
+            username:profile.username
+        }
+
         User
-            .createOrLogin(token, tokenSecret, profile.id, "twitter")
+            .createOrLogin(data)
             .then(u => done(null, u))
     }),
     scope:[]

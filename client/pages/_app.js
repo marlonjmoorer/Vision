@@ -1,8 +1,9 @@
 import App, {Container} from 'next/app'
 import React from 'react'
 import parser from 'cookie'
-import AuthContext from '../context/AuthContext';
+import Context from '../context';
 import NavBar from '../components/NavBar'
+
 export default class extends App {
   static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
@@ -17,18 +18,16 @@ export default class extends App {
         pageProps.token = cookiesJSON.token;
       }
     }
-
     return {pageProps}
   }
 
   render () {
     const {Component, pageProps,children} = this.props
-    console.log(this.props)
     return (<Container>
-    <AuthContext {...pageProps}>
+    <Context {...pageProps}>
       <NavBar/>
       <Component {...pageProps} />
-    </AuthContext>
+    </Context>
     </Container>)
   }
 }

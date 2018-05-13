@@ -12,8 +12,7 @@ const generateToken=({loginType,id,profileId})=>{
 }
 
 const parseToken=(token)=>{
-    var decoded = jwt.verify(token,secret);
-    return decoded
+    return jwt.verify(token,secret);
 }
 
 module.exports={

@@ -8,5 +8,5 @@ fs.readdirSync(__dirname)
 .forEach(filename=>{
     sequelize.import(`./${filename}`)
 })
-//sequelize.sync({alter:true})
+sequelize.sync({alter:true})
 module.exports=sequelize.models

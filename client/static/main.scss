@@ -1,5 +1,7 @@
+@import "~@blueprintjs/core/lib/scss/variables";
 body{
    margin: 0;
+   background-color: $cobalt3
 }
 .bar{
     flex-grow: 1;

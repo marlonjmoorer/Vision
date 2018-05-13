@@ -2,12 +2,12 @@ module.exports = {
     google: {
       clientID: process.env.googleKey,
       clientSecret: process.env.googleSecret,
-      callbackURL: "https://127.0.0.1:3500/auth/google/callback"
+      callbackURL: "https://localhost:3500/auth/google/callback"
     },
     twitter: {
       consumerKey: process.env.twitterKey,
       consumerSecret: process.env.twitterSecret,
-      callbackURL: "https://127.0.0.1:3500/auth/twitter/callback"
+      callbackURL: "https://localhost:3500/auth/twitter/callback"
     },
     other: {
         consumerKey: 'get_your_own',

@@ -5,24 +5,16 @@ const {User} =require('../models');
 
 
 const  auth=(req,res,next)=>{
-    if(req.user){
-        next()
-    }
-    else{
-        next("/")  
-    }
-}
-router.use((req,res,next)=>{
     const {authorization}=req.headers
-    if(authorization&& authorization.includes("JWT")){
-        var token =authorization.split(" ")[1]
-        var data= parseToken(token)
-        User.findOne({id:data.sub,profileId:data.profileId}).then(user=>{
+    if(authorization&&authorization.includes("JWT")){
+        const token =authorization.split(" ")[1]
+        const data= parseToken(token)
+        return User.findById(data.sub).then(user=>{
             req.user=user
-            next()
+            return next()
         })
     }
-})
+    return res.status(401).send("No authorized") 
+}
 router.use("/users",auth,require("./users"))
-
 module.exports=router

@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import {Button,Card,Elevation,Icon} from "@blueprintjs/core"
 import { withConsumer } from '../context/AuthContext';
+import { Column, Row } from 'simple-flexbox';
 
 
 class SignupForm extends Component {
 
     constructor(props){
-        super(props)
-       this.state={url:null}
-       
+        super(props)       
     }
     componentDidMount(){
         
@@ -18,26 +17,25 @@ class SignupForm extends Component {
         if(data.token)
         {
             this.props.setToken(data.token)
+            .then(()=>this.props.fetchUser())
             window.removeEventListener("message",this.handleMessage)
         }
     }
 
     authenticate=(provider)=> {
-        window.open('http://127.0.0.1:3500/auth/' + provider);
+        window.open('/auth/' + provider);
     }
 
     render() {
         return (
-        <div style={{
-            display:"flex",
-            flexDirection:"column",
-            justifyContent:"center",
-            flexGrow:0
-            }}>
-         
-            <Button intent="danger" value="google"  onClick={e=>this.authenticate("google")} >Sign in with Google</Button>
-            <Button intent="primary" value="twitter" onClick={e=>this.authenticate("twitter")} >Sign in with  Twitter</Button>
-        </div>
+        <Row horizontal="center">
+            <Column vertical="space-between">
+            
+                <Button intent="danger"   onClick={e=>this.authenticate("google")} >Sign in with Google</Button>
+                <Button intent="primary"  onClick={e=>this.authenticate("facebook")} >Sign in with  Facebook</Button>
+                <Button intent="primary"  onClick={e=>this.authenticate("twitter")} >Sign in with  Twitter</Button>
+            </Column>
+        </Row>
         )
     }
 }

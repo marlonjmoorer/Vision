@@ -8,9 +8,18 @@ module.exports = {
         clientID: google.clientID,
         clientSecret: google.clientSecret,
         callbackURL: google.callbackURL
-    }, function (token, tokenSecret, profile, done) {
+    }, function (token, secret, profile, done) {
+        const data={
+            token,
+            secret,
+            profileId:profile.id,
+            loginType:"google",
+            displayName:profile.displayName,
+            username:profile.displayName.replace(/\s/g,'')
+        }
+
         User
-            .createOrLogin(token, tokenSecret, profile.id, "google")
+            .createOrLogin(data)
             .then(u => done(null, u))
     }),
     scope:[ 

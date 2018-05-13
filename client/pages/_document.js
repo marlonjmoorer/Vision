@@ -8,7 +8,6 @@ export default class extends Document {
       <html>
         <Head>
         <link rel="stylesheet" href="/_next/static/style.css" />
-        <link rel="stylesheet" href="/static/main.css" />
         </Head>
         <body className="pt-dark">
             <Main />

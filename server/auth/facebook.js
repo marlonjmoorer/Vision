@@ -8,9 +8,19 @@ module.exports = {
         clientID: facebook.clientID,
         clientSecret: facebook.clientSecret,
         callbackURL: facebook.callbackURL
-    }, function (token, tokenSecret, profile, done) {
+    }, function (token, secret, profile, done) {
+
+        const data={
+            token,
+            secret,
+            profileId:profile.id,
+            loginType:"facebook",
+            displayName:profile.displayName,
+            username:profile.displayName.replace(/\s/g,'')
+        }
+
         User
-            .createOrLogin(token, tokenSecret, profile.id, "facebook")
+            .createOrLogin(data)
             .then(u => done(null, u))
     }),
     scope:[ 'user_friends', 'manage_pages']

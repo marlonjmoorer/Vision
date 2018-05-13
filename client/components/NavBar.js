@@ -1,5 +1,7 @@
 
 import React, { Component } from 'react'
+//import Router from 'next/router'
+import Router from '../../router';
 import {
   Navbar,
   NavbarDivider,
@@ -9,7 +11,7 @@ import {
   Alignment,
   Popover,
   Position,
-  Dialog,Intent,Menu,MenuItem,Icon
+  Dialog,Intent,Menu,MenuItem,Icon,AnchorButton
 }from '@blueprintjs/core';
 import SignupForm from './SignupForm';
 import {withConsumer} from '../context/AuthContext';
@@ -26,47 +28,45 @@ import {withConsumer} from '../context/AuthContext';
 
 
   render() {
-    console.log(this.props)
-    const {loggedIn,logout}=this.props
+    const {loggedIn,user}=this.props
     return (
       <div>
         <Navbar>
             <NavbarGroup align={Alignment.LEFT}>
-                <NavbarHeading  > <Button text="Vision" minimal rightIcon="eye-open"/> </NavbarHeading>
+                <NavbarHeading  > <AnchorButton href="/" text="Vision" minimal rightIcon="eye-open"/> </NavbarHeading>
             </NavbarGroup>
-           {loggedIn?
-            <NavbarGroup align={Alignment.RIGHT}>                
-                <Popover content={<UserMenu logout={logout}/>} position={Position.BOTTOM}>
-                  <Button icon="user" />
-                </Popover>
-            </NavbarGroup>
-           
-           :
-           
-            <NavbarGroup align={Alignment.RIGHT}>
-                <Button className="pt-minimal" icon="home" text="Home" />
-                <Button text="Signin" onClick={this.toggleOverlay} />
-                <Dialog
-                    icon="inbox"
-                    isOpen={this.state.isOpen}
-                    onClose={this.toggleOverlay}
-                    title="Signin">
-                    <div className="pt-dialog-body">
-                      <SignupForm/>
-                    </div>
-                </Dialog>
-            </NavbarGroup>
-            }
+           {loggedIn?<LoggedInActions/>:<Actions isOpen={this.state.isOpen} toggle={this.toggleOverlay}/>}
         </Navbar>
       </div>
     )
   }
 }
-const UserMenu=({logout})=>
+const LoggedInActions = ({loggedIn})=>
+  <NavbarGroup align={Alignment.RIGHT}>                
+  <Popover content={<UserMenu/>} position={Position.BOTTOM}>
+    <Button icon="user" />
+  </Popover>
+  </NavbarGroup>
+
+const Actions =({isOpen,toggle})=>
+    <NavbarGroup align={Alignment.RIGHT}>
+        <Button className="pt-minimal" icon="home" text="Home" />
+        <Button text="Signin" onClick={toggle} />
+        <Dialog
+            icon="inbox"
+            isOpen={isOpen}
+            onClose={toggle}
+            title="Signin">
+            <div className="pt-dialog-body">
+              <SignupForm/>
+            </div>
+        </Dialog>
+  </NavbarGroup>
+
+const UserMenu=withConsumer(({logout,user})=>
 <Menu>
-    <MenuItem icon="dashboard"  href="/dashboard"  text="Dashboard" />
+    <MenuItem icon="dashboard" onClick={e=>Router.pushRoute("profile",{id:user.id})}  text="Dashboard"/>
     <MenuItem icon="log-out"  onClick={logout}  text="Logout" />
     <MenuItem text="Settings..." icon="cog" />
-    
-</Menu>
+</Menu>)
 export default withConsumer(NavbarComponent)
