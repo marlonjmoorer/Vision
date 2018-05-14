@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Button,Card,Elevation,Icon} from "@blueprintjs/core"
-import { withConsumer } from '../context/AuthContext';
+import { consumer } from '../context/AuthContext';
 import { Column, Row } from 'simple-flexbox';
 
 
@@ -39,4 +39,4 @@ class SignupForm extends Component {
         )
     }
 }
-export default withConsumer(SignupForm)
+export default consumer(SignupForm)

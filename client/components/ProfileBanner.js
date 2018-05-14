@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, Card, Elevation } from "@blueprintjs/core";
-import { withConsumer } from '../context/ProfileContext';
+import { consumer } from '../context/ProfileContext';
 import { Column, Row } from 'simple-flexbox';
-export default withConsumer(({profile}) => {
+export default consumer(({profile}) => {
   return (
     <Card className="banner" interactive={true} elevation={Elevation.TWO}>
       <Row>

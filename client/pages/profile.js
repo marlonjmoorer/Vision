@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {authGuard} from '../context/AuthContext';
-import { withConsumer } from '../context/ProfileContext';
+import { consumer } from '../context/ProfileContext';
+import { inject } from '../context';
 
 import ProfileBanner from '../components/ProfileBanner';
 import UserContent from '../components/UserContent';
@@ -10,11 +11,16 @@ class DashBoard extends Component {
         super(props);
         this.state = {};
         console.log(props)
-        props.fetchProfile(props.id)
+        if(process.browser)
+            props.fetchProfile(props.id)
     }
+    static async getInitialProps({query}) {
+        return {...query}
+    }
+
     componentDidMount(){
         console.log(this.props)
-        this.props.fetchProfile(this.props.id)
+      //  this.props.fetchProfile(this.props.id)
     }
     render() {
         return (
@@ -25,4 +31,4 @@ class DashBoard extends Component {
         )
     }
 }
-export default  authGuard(withConsumer(DashBoard))
+export default  inject(["auth","profile"])(DashBoard)

@@ -4,7 +4,7 @@ import api from '../api';
 
 const ProfileContext=React.createContext()
 
-export default class Profile extends Component {
+export  class Provider extends Component {
 
   constructor(props){
     super(props) 
@@ -26,7 +26,8 @@ export default class Profile extends Component {
   }
 }
 
-export const withConsumer=(Component)=>props=>
+export const consumer=(Component)=>props=>
 <ProfileContext.Consumer>
 {(context)=><Component {...props} {...context} />}
 </ProfileContext.Consumer>
+

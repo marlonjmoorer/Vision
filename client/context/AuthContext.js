@@ -6,7 +6,7 @@ import Router from 'next/router'
 const AuthContext=React.createContext()
 
 
-export default class Auth extends Component {
+export  class Provider extends Component {
 
   constructor(props){
     super(props) 
@@ -56,29 +56,10 @@ export default class Auth extends Component {
     )
   }
 }
-
-export const withConsumer=(Component)=>props=>
+export const consumer=(Component)=>props=>
 <AuthContext.Consumer>
 {(context)=><Component {...props} {...context} />}
 </AuthContext.Consumer>
 
-export const authGuard= (Page)=> class extends Component{
-  constructor(props) {
-    super(props)
-    
-  }
-  static async getInitialProps ({ query }) {
-    return {...query}
-  }
-  render(){
-   return <AuthContext.Consumer>
-      {(context)=>{
-        if (process.browser&&!context.loggedIn) {
-          Router.push("/")
-        }
-      return <Page {...this.props} {...context}/>
-     }}
-    </AuthContext.Consumer>
-  }
-}
+
 

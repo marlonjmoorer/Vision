@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react'
-//import Router from 'next/router'
 import Router from '../../router';
 import {
   Navbar,
@@ -14,7 +13,8 @@ import {
   Dialog,Intent,Menu,MenuItem,Icon,AnchorButton
 }from '@blueprintjs/core';
 import SignupForm from './SignupForm';
-import {withConsumer} from '../context/AuthContext';
+import {consumer} from '../context/AuthContext';
+import {inject} from '../context';
 
 
 
@@ -63,10 +63,10 @@ const Actions =({isOpen,toggle})=>
         </Dialog>
   </NavbarGroup>
 
-const UserMenu=withConsumer(({logout,user})=>
+const UserMenu=consumer(({logout,user})=>
 <Menu>
     <MenuItem icon="dashboard" onClick={e=>Router.pushRoute("profile",{id:user.id})}  text="Dashboard"/>
     <MenuItem icon="log-out"  onClick={logout}  text="Logout" />
     <MenuItem text="Settings..." icon="cog" />
 </Menu>)
-export default withConsumer(NavbarComponent)
+export default inject(["auth","profile"])(NavbarComponent)
