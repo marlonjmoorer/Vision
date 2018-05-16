@@ -30,7 +30,7 @@ app.prepare().then(()=>{
         console.log('https://localhost:' + port)
         console.log('====================================');
     })
-})
+}).catch(console.log)
 
 
  

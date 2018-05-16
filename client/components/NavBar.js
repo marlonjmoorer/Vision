@@ -13,14 +13,19 @@ import {
   Dialog,Intent,Menu,MenuItem,Icon,AnchorButton
 }from '@blueprintjs/core';
 import SignupForm from './SignupForm';
-import {consumer} from '../context/AuthContext';
-import {inject} from '../context';
+import { withContext } from '../context';
 
 
 
  class NavbarComponent extends Component {
   state={
     isOpen:false
+  }
+  constructor(props){
+    super(props)
+    if(props.loggedIn && !props.user){
+     // this.props.fetchUser()
+    }
   }
   toggleOverlay=()=>{
     this.setState(({isOpen})=>({isOpen:!isOpen}))
@@ -29,6 +34,7 @@ import {inject} from '../context';
 
   render() {
     const {loggedIn,user}=this.props
+    console.log(this.props)
     return (
       <div>
         <Navbar>
@@ -63,10 +69,10 @@ const Actions =({isOpen,toggle})=>
         </Dialog>
   </NavbarGroup>
 
-const UserMenu=consumer(({logout,user})=>
+const UserMenu=withContext(({logout,user})=>
 <Menu>
     <MenuItem icon="dashboard" onClick={e=>Router.pushRoute("profile",{id:user.id})}  text="Dashboard"/>
     <MenuItem icon="log-out"  onClick={logout}  text="Logout" />
     <MenuItem text="Settings..." icon="cog" />
 </Menu>)
-export default inject(["auth","profile"])(NavbarComponent)
+export default withContext(NavbarComponent)

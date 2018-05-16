@@ -1,14 +1,17 @@
 import axios from 'axios';
-
+import Cookie from 'js-cookie';
 const api= axios.create({
-    withCredentials:true,
+   // withCredentials:true,
     baseURL:"/api"
 })
  
-export const setAuth=(token)=>{
-    api.defaults.headers={
-        "Authorization":`JWT ${token}`,
-        'Content-Type': 'application/json'
+api.interceptors.request.use((config)=> {
+    console.log("calling",config.baseURL,config.url)
+    const token= Cookie.get("token")
+    if(token)
+    {
+        config.headers.authorization=`JWT ${token}`
     }
-}
+    return config;
+});
 export default api

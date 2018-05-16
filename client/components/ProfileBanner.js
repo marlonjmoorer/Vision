@@ -1,8 +1,10 @@
 import React from 'react'
 import { Button, Card, Elevation } from "@blueprintjs/core";
-import { consumer } from '../context/ProfileContext';
+import { withContext } from '../context';
+
 import { Column, Row } from 'simple-flexbox';
-export default consumer(({profile}) => {
+export default   withContext((props) => {
+  console.log("profile",props)
   return (
     <Card className="banner" interactive={true} elevation={Elevation.TWO}>
       <Row>
@@ -11,7 +13,7 @@ export default consumer(({profile}) => {
           <p>Card content</p>
         </Column>
         <Column vertical="center" style={{marginLeft:"9px"}}>
-            <h2><a href="#">{`${profile.displayName}@${profile.username}`}</a></h2>
+            {/* <h2><a href="#">{`${profile.displayName}@${profile.username}`}</a></h2> */}
             <Button>Update Profile</Button>
         </Column>
       </Row>

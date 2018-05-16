@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import {authGuard} from '../context/AuthContext';
-import { consumer } from '../context/ProfileContext';
-import { inject } from '../context';
+import { withContext } from '../context';
 
 import ProfileBanner from '../components/ProfileBanner';
 import UserContent from '../components/UserContent';
@@ -31,4 +29,4 @@ class DashBoard extends Component {
         )
     }
 }
-export default  inject(["auth","profile"])(DashBoard)
+export default  withContext(DashBoard)
