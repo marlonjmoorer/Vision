@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Button,Card,Elevation,Icon} from "@blueprintjs/core"
-import { withContext } from '../context';
+import { connect } from '../Context';
 import { Column, Row } from 'simple-flexbox';
 
 
@@ -39,4 +39,4 @@ class SignupForm extends Component {
         )
     }
 }
-export default withContext(SignupForm)
+export default connect(SignupForm)

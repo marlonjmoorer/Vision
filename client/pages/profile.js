@@ -1,32 +1,33 @@
 import React, {Component} from 'react'
-import { withContext } from '../context';
-
+import { connect } from '../Context';
 import ProfileBanner from '../components/ProfileBanner';
 import UserContent from '../components/UserContent';
 
-class DashBoard extends Component {
+class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        console.log(props)
-        if(process.browser)
-            props.fetchProfile(props.id)
+        console.log("lo",props)
+        // if(process.browser)
+        //     props.fetchProfile(props.id)
     }
-    static async getInitialProps({query}) {
-        return {...query}
+    static async getInitialProps({query,store}) {
+        await store.dispatch("fetchProfile",query.id) 
+        console.log("store",store) 
+        return {profile: store.profile}
     }
 
     componentDidMount(){
-        console.log(this.props)
-      //  this.props.fetchProfile(this.props.id)
+
+     
     }
     render() {
         return (
         <div>
-            <ProfileBanner/>
+            <ProfileBanner profile={this.props.profile||{}}/>
             <UserContent/>
         </div>
         )
     }
 }
-export default  withContext(DashBoard)
+export default  connect(Profile)

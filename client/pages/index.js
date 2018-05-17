@@ -3,7 +3,7 @@ import page from './page'
 
 
 const Index= (props) => {
-  console.log(props)
+
   return (
      <p>y</p>
   )

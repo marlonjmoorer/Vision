@@ -13,7 +13,7 @@ import {
   Dialog,Intent,Menu,MenuItem,Icon,AnchorButton
 }from '@blueprintjs/core';
 import SignupForm from './SignupForm';
-import { withContext } from '../context';
+import { connect } from '../Context';
 
 
 
@@ -24,7 +24,7 @@ import { withContext } from '../context';
   constructor(props){
     super(props)
     if(props.loggedIn && !props.user){
-     // this.props.fetchUser()
+      this.props.fetchUser()
     }
   }
   toggleOverlay=()=>{
@@ -34,7 +34,6 @@ import { withContext } from '../context';
 
   render() {
     const {loggedIn,user}=this.props
-    console.log(this.props)
     return (
       <div>
         <Navbar>
@@ -69,10 +68,10 @@ const Actions =({isOpen,toggle})=>
         </Dialog>
   </NavbarGroup>
 
-const UserMenu=withContext(({logout,user})=>
+const UserMenu=connect(({logout,user})=>
 <Menu>
     <MenuItem icon="dashboard" onClick={e=>Router.pushRoute("profile",{id:user.id})}  text="Dashboard"/>
     <MenuItem icon="log-out"  onClick={logout}  text="Logout" />
     <MenuItem text="Settings..." icon="cog" />
 </Menu>)
-export default withContext(NavbarComponent)
+export default connect(NavbarComponent)

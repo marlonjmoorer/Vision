@@ -2,12 +2,15 @@ import App, {Container} from 'next/app'
 import React from 'react'
 import parser from 'cookie'
 import NavBar from '../components/NavBar'
-import  Context from '../context';
 import { ContextMenu } from '@blueprintjs/core';
+import Provider from '../Context/Provider';
+import store from '../store';
+
 
 class Main extends App {
   static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
+    ctx.store=store
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
@@ -26,10 +29,10 @@ class Main extends App {
     const {Component, pageProps,children} = this.props
     return (
     <Container>
-      <Context {...pageProps}>
+      <Provider store={store}>
         <NavBar/>
         <Component {...pageProps}/>
-      </Context>  
+      </Provider>
     </Container>)
   }
 }
