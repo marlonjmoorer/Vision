@@ -25,9 +25,14 @@ app.prepare().then(()=>{
     server.use(function (req, res, next) {
         require('./server')(req, res, next)
     }).use(handler)
-    https.createServer(httpsOptions,server).listen(port, () => {
+    // https.createServer(httpsOptions,server).listen(port, () => {
+    //     console.log('====================================');
+    //     console.log('https://localhost:' + port)
+    //     console.log('====================================');
+    // })
+    server.listen(port, () => {
         console.log('====================================');
-        console.log('https://localhost:' + port)
+        console.log('http://localhost:' + port)
         console.log('====================================');
     })
 }).catch(console.log)

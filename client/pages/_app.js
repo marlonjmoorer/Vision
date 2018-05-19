@@ -6,21 +6,27 @@ import { ContextMenu } from '@blueprintjs/core';
 import Provider from '../Context/Provider';
 import store from '../store';
 
+import api from '../api';
 
 class Main extends App {
   static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
     ctx.store=store
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
     const {req}=ctx
     if (req && req.headers) {
       const cookies = req.headers.cookie;
       if (typeof cookies === 'string') {
-        const cookiesJSON = parser.parse(cookies);
-        pageProps.token = cookiesJSON.token;
+        const {token}= parser.parse(cookies);
+        console.log("Setting Token")
+        store.dispatch("setToken",token)
+        api.defaults.headers.common={
+          "Authorization":`JWT ${token}`,
+          'Content-Type': 'application/json'
+        }
       }
+    }
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
     }
     return {pageProps}
   }

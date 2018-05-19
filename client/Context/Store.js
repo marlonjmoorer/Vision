@@ -13,7 +13,6 @@ export default class Store extends EventEmitter {
     return this.state;
   }
   dispatch=async (key,...args)=>{
-    console.log("dis",key,...args)
     this.actions[key](...args)
   }
  
