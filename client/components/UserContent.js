@@ -10,11 +10,10 @@ export default class componentName extends Component {
             key={"horizontal"}>
                     <Tab id="rx" title="Videos" panel={
                      <Card>
-                    <NonIdealState
-                        icon="film"
-                        title="No videos"
-                        />
-                        </Card>
+                        <NonIdealState
+                            icon="film"
+                            title="No videos"/>
+                      </Card>
                       } />
                     <Tab id="ng" title="Angular"/>
                     <Tab id="mb" title="Ember"/>

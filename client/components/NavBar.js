@@ -13,7 +13,7 @@ import {
   Dialog,Intent,Menu,MenuItem,Icon,AnchorButton
 }from '@blueprintjs/core';
 import SignupForm from './SignupForm';
-import { connect } from '../Context';
+import { connect } from 'phaze';
 
 
 
@@ -67,7 +67,7 @@ const Actions =({isOpen,toggle})=>
             </div>
         </Dialog>
   </NavbarGroup>
-
+  
 const UserMenu=connect(({logout,user})=>
 <Menu>
     <MenuItem icon="dashboard" onClick={e=>Router.pushRoute("profile",{id:user.id})}  text="Dashboard"/>

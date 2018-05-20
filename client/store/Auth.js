@@ -11,24 +11,31 @@ export const state={
     token:Cookie.get("token"),
     user:null,
 }
-
+export const effects={
+ LOGOUT(state){
+  state.loggedIn=false
+  state.token=null
+ },
+ LOGIN(state,token){
+  Cookie.set('token',token);
+  state.loggedIn=true
+  state.token=token  
+ },
+ SET_USER(state,user){
+  state.user=user
+ }
+}
 export const actions={
-  setToken:async(state,token)=>{
-    console.log('Log',token)
-    Cookie.set('token',token);
-    return({loggedIn:true,token})  
-  },
-  logout:(state)=> {
+  logout:({commit})=> {
     Cookie.remove("token")
     window.location.href = window.location.href
-    return ({loggedIn:false,token:null})
+    commit("LOGOUT")
   },
-  fetchUser:async(state)=>{
-    console.log("fetching user")
-    return api.get("/api/users/self").then(({data})=>({user:data}))
-  },
-  updateUser:()=>{
- 
+  fetchUser:async({commit})=>{
+    return api.get("/users/self")
+    .then(({data})=>{
+      commit("SET_USER",data)
+    })
   }
 }
 

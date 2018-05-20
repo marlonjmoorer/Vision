@@ -1,20 +1,8 @@
-import * as Profile from './ProfileContext';
-import * as Auth from './AuthContext';
+import * as Profile from './Profile';
+import * as Auth from './Auth';
 import React, {Component,createContext} from 'react'
-import Axios from 'axios';
-import Store from '../Context/Store';
 import { EventEmitter } from 'events';
-
-import { connect } from '../Context';
-
-
-const context = {
-    "auth": Auth,
-    "profile": Profile
-}
-
-
-
+import { connect,Store } from 'phaze';
 
 export default new Store({
     state:{
@@ -24,6 +12,10 @@ export default new Store({
     actions:{
        ... Auth.actions,
        ...Profile.actions
+    },
+    effects:{
+        ...Auth.effects,
+        ...Profile.effects
     }
 })
 

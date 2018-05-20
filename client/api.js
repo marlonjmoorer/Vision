@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
  import store from './store';
 const api= axios.create({
     withCredentials:true,
-    baseURL:"http://localhost:3500"
+    baseURL:"http://localhost:3500/api"
 })
 
 api.interceptors.request.use((config)=> {

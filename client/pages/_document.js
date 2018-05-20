@@ -1,7 +1,7 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import parser from 'cookie'
 import "@blueprintjs/core/lib/css/blueprint.css"
-import "../static/main.scss"
+import "../static/scss/main.scss"
 export default class extends Document {
   render() {
     return (

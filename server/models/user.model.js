@@ -18,7 +18,7 @@ module.exports=(sequelize, DataTypes)=>{
             type:DataTypes.TEXT
         },
         photo:{
-            type:DataTypes.BLOB
+            type:DataTypes.BLOB('long')
         },
         username:{
             type:DataTypes.STRING
@@ -34,5 +34,10 @@ module.exports=(sequelize, DataTypes)=>{
             return user
         })
     };
+    User.checkHandleExists=(username)=>{
+        return User.count({
+            where: { username}
+        }).then(count=>count>0)
+    }
     return User
 }

@@ -1,14 +1,28 @@
 import React from 'react'
 import { Button, Card, Elevation } from "@blueprintjs/core";
-import { connect} from '../Context';
+//import { connect} from 'phaze';
 
 import { Column, Row } from 'simple-flexbox';
 export default ({profile,toggle}) => {
+  const {photo}=profile
+  let url="/static/avatar.png"
+  let imgloading=false
+
+  if(photo){
+    if(process.browser){
+      var blob = new Blob([new Uint8Array(photo.data)]);
+      url=URL.createObjectURL(blob)
+    }
+    else{
+      const binary=Buffer.from(photo).toString('base64')
+      url= `data:image/png;base64,${binary}`;
+    }
+  }
   return (
     <Card className="banner" interactive={true} elevation={Elevation.TWO}>
       <Row>
         <Column flexGrow={1} horizontal="center"> 
-          <img  width="140" height="140"  src="https://orig00.deviantart.net/e40f/f/2012/239/a/d/aang_facebook_default_profile_picture_by_redjanuary-d5cm82l.png"/> 
+          <img  width="140" height="140"  src={url}/> 
           <p>Card content</p>
         </Column>
         <Column flexGrow={4} vertical="center" >

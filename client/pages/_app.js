@@ -3,7 +3,7 @@ import React from 'react'
 import parser from 'cookie'
 import NavBar from '../components/NavBar'
 import { ContextMenu } from '@blueprintjs/core';
-import Provider from '../Context/Provider';
+import {Provider} from 'phaze';
 import store from '../store';
 
 import api from '../api';
@@ -18,11 +18,14 @@ class Main extends App {
       if (typeof cookies === 'string') {
         const {token}= parser.parse(cookies);
         console.log("Setting Token")
-        store.dispatch("setToken",token)
-        api.defaults.headers.common={
-          "Authorization":`JWT ${token}`,
-          'Content-Type': 'application/json'
+        if (token) {
+              store.commit("LOGIN",token)
+              api.defaults.headers.common={
+                "Authorization":`JWT ${token}`,
+                'Content-Type': 'application/json'
+              }
         }
+
       }
     }
     if (Component.getInitialProps) {

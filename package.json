@@ -41,6 +41,7 @@
     "simple-flexbox": "^1.2.0"
   },
   "devDependencies": {
+    "multiparty": "^4.1.4",
     "nodemon": "^1.17.4"
   }
 }
